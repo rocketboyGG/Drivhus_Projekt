@@ -16,7 +16,7 @@ class LED_sun:
     def set_duty_RED(self, duty):
         self.pi.set_PWM_dutycycle(self.LED_RED, duty)
 
-    def set_duty_RED(self, duty):
+    def set_duty_BLUE(self, duty):
         self.pi.set_PWM_dutycycle(self.LED_BLUE, duty)
 
     def print_duty(self):
