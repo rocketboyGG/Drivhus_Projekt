@@ -6,7 +6,7 @@ pumpe = Pumpe(16)
 led_sun = LED_sun(12, 13)
 
 led_sun.set_duty_RED(60)
-led_sun.set_duty_RED(77)
+led_sun.set_duty_BLUE(77)
 
 while True:
     led_sun.print_duty()
