@@ -11,9 +11,11 @@ class Pumpe:
     
     def turnOn(self):
         self.pi.write(self.pin, 1)
+        print("Pumpe pin værdi: ",self.pi.read(self.pin))
     
     def turnOff(self):
         self.pi.write(self.pin, 0)
+        print("Pumpe pin værdi: ",self.pi.read(self.pin))
 
         
         
