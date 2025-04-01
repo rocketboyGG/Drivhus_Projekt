@@ -9,9 +9,9 @@ class LED_sun:
         pi = pigpio.pi()
         self.LED_RED = LED_RED
         self.LED_BLUE = LED_BLUE
-        pi = pigpio.pi()
-        pi.set_PWM_range(self.LED_RED, 100)
-        pi.set_PWM_range(self.LED_BLUE, 100)
+        self.pi = pigpio.pi()
+        self.pi.set_PWM_range(self.LED_RED, 100)
+        self.pi.set_PWM_range(self.LED_BLUE, 100)
 
     def set_duty_RED(self, duty):
         self.pi.set_PWM_dutycycle(self.LED_RED, duty)

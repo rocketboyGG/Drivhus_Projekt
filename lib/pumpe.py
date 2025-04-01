@@ -1,7 +1,7 @@
 import pigpio
 from time import sleep
 
-# PIN PUMPE ???
+# PIN PUMPE 36
 
 class Pumpe:
     def __init__(self, pin):

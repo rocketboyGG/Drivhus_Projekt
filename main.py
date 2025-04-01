@@ -2,7 +2,7 @@ from time import sleep
 from lib.led_light import LED_sun
 from lib.pumpe import Pumpe
 
-pumpe = Pumpe(14)
+pumpe = Pumpe(16)
 led_sun = LED_sun(12, 13)
 
 led_sun.set_duty_RED(60)
@@ -13,3 +13,4 @@ while True:
     pumpe.turnOn()
     sleep(1)
     pumpe.turnOff()
+    sleep(1)
