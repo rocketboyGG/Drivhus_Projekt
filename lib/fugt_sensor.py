@@ -7,16 +7,16 @@ class MCP3021:
     def __init__(self, address = 0x48):
         self.address = address
    
-    def read_raw(self):
+    def read_raw(self, addr):
         # Reads word (16 bits) as int
-        rd = self.bus.read_word_data(self.address, 0)
+        rd = self.bus.read_word_data(addr, 0)
         # Exchanges upper and lower bytes
         data = ((rd & 0xFF) << 8) | ((rd & 0xFF00) >> 8)
         # Ignores two least significiant bits
         return data >> 2
 
     def fugt_procent(self):
-        adc = self.read_raw()
+        adc = self.read_raw(0x48)
         print("Fugt raw!", adc)
         procent = ((780-adc)/(780-308))*100
         if procent < 0:
