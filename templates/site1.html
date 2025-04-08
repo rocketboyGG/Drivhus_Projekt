@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 {% block title %}
-site 1
+PlantPic
 {% endblock %}
 {% block content %}
-<p>site 1</p>
+<p>Picture of the plant:</p>
+<br>
+<img src="{{url_for('static', filename='img/pic.jpg')}}">
+<br>
+<button><a href="/">Take a new picture!</a></button>
 {% endblock %}

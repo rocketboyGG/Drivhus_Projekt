@@ -1,4 +1,7 @@
 from flask import Flask, render_template
+from lib.camera import Camera
+
+camera = Camera()
 
 app = Flask(__name__)
 
@@ -8,6 +11,7 @@ def home():
 
 @app.route("/site1/")
 def site1():
+    camera.capture_pic()
     return render_template("site1.html")
 
 @app.route("/site2/")
