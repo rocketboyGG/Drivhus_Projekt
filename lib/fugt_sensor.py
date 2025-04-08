@@ -4,7 +4,7 @@ import time
 class MCP3021:
     bus = smbus.SMBus(1)
    
-    def __init__(self, address = 0x4B):
+    def __init__(self, address = 0x48):
         self.address = address
    
     def read_raw(self):
@@ -17,6 +17,7 @@ class MCP3021:
 
     def fugt_procent(self):
         adc = self.read_raw()
+        print("Fugt raw!", adc)
         procent = ((780-adc)/(780-308))*100
         if procent < 0:
             procent = 0
