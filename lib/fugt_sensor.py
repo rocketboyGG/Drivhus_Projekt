@@ -1,7 +1,10 @@
 import smbus
 import time
+import threading
+from datetime import datetime
+from sqlite3 import Connection
 
-class MCP3021:
+class FugtSensor:
     bus = smbus.SMBus(1)
    
     def __init__(self, address = 0x48):
@@ -17,17 +20,44 @@ class MCP3021:
 
     def fugt_procent(self):
         adc = self.read_raw(0x48)
-        print("Fugt raw!", adc)
         procent = ((780-adc)/(780-308))*100
-        if procent < 0:
-            procent = 0
-        return procent
-"""
-adc = MCP3021()
+        data = round(procent, 2)
+        if data < 0:
+            data = 0
+        return data
+    
+    def insert_soilmoisture(self):
+        date_time = datetime.now()
+        timestamp = f"{date_time.strftime('%d-%m-%Y-%H:%M:%S')}"
+        con = Connection("drivhus.db")
+        cur = con.cursor()
+        moisture_percentage = self.fugt_procent()
+        params = (timestamp, moisture_percentage)
+        sql = """INSERT INTO SoilMoisture (Timestamp, moisture_percentage) VALUES(?, ?)"""
+        cur.execute(sql, params)
+        con.commit()
+        con.close()
+    
+    def continous_measure(self):
+        while True:
+            self.soil_moisture_percent = self.fugt_procent()
+            sleep(0.2)
+        
+    def start_continous_measure(self):
+        soil_thread = threading.Thread(target=self.continous_measure)
+        soil_thread.start()
 
-while True:
-    raw = adc.read_raw()
-    print("Raw :", raw)
-    print("procent :", adc.fugt_procent())
-    time.sleep(1)
-"""
+    def select_soil_percentage(self, amount):
+        if isinstance(amount, int) and amount > 0:
+            con = Connection("drivhus.db")
+            cur = con.cursor()
+            sql = f"""SELECT moisture_percentage, Timestamp FROM SoilMoisture ORDER BY rowid DESC LIMIT {amount}"""
+            cur.execute(sql)
+            img_rows = cur.fetchall()
+            print(img_rows)
+            con.close()
+            return img_rows
+
+
+
+

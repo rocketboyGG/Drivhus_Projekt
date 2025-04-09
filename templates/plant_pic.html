@@ -5,7 +5,7 @@ PlantPic
 {% block content %}
 <p>Picture of the plant:</p>
 <br>
-<img src="{{url_for('static', filename='img/pic.jpg')}}" width="600" height="600">
+<img src="../static/img/{{image}}" width="600" height="600">
 <br>
-<button><a href="/site1/">Take a new picture!</a></button>
+<button><a href="{{url_for('plant_pic')}}">Take a new picture!</a></button>
 {% endblock %}

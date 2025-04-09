@@ -1,14 +1,14 @@
 from time import sleep, time
 from lib.led_light import LED_sun
 from lib.pumpe import Pumpe
-from lib.fugt_sensor import MCP3021
+from lib.fugt_sensor import FugtSensor
 from lib.lys_sensor import LysSensor
 from lib.camera import Camera
 import schedule
 
 pumpe = Pumpe(16)
 led_sun = LED_sun(12, 13)   
-fugt_sensor = MCP3021()
+fugt_sensor = FugtSensor()
 lys_sen = LysSensor()
 camera = Camera()
 
