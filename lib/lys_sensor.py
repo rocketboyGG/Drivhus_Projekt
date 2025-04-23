@@ -2,9 +2,13 @@ import smbus
 
 class LysSensor:
     bus = smbus.SMBus(1)
+    
+
 
     def __init__(self, address = 0x4B):
         self.address = address
+        self.alpha = -0.06355932203
+        self.beta = 65.02118644
    
     def read_raw(self):
         # Reads word (16 bits) as int
@@ -18,4 +22,10 @@ class LysSensor:
         adcVal = self.read_raw()
         redDC = self.alpha * adcVal + self.beta
         blueDC = redDC * 77 / 60
-        return redDC, blueDC
+        if blueDC > 77:
+            blueDC = 77
+        if redDC > 60:
+            redDC = 60
+
+        return int(redDC), int(blueDC)
+    

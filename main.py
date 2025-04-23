@@ -12,8 +12,6 @@ fugt_sensor = FugtSensor()
 lys_sen = LysSensor()
 camera = Camera()
 
-led_sun.set_duty_RED(60)
-led_sun.set_duty_BLUE(77)
 
 
 def fugtcheck():
@@ -24,12 +22,26 @@ def fugtcheck():
         sleep(2)
         pumpe.turnOff()
 
-schedule.every(1).minutes.do(fugtcheck)
+def morgen():
+    ...
+
+def nat():
+    led_sun.set_duty_RED(0)
+    led_sun.set_duty_BLUE(0)
+
+
+schedule.every(100).minutes.do(fugtcheck)
+schedule.every().day.at("08:00").do()
+schedule.every().day.at("23:59").do(nat)
 camera.capture_pic()
 
 while True:
     procent = fugt_sensor.fugt_procent()
     print("Fugt Procent", procent)
     print("Lys ", lys_sen.read_raw())
+    redDutyCycle, blueDutyCycle = lys_sen.brightnessToDutyCycles()
+    print("Red Duty: ", redDutyCycle,"Blue Duty:",blueDutyCycle)
+    led_sun.set_duty_RED(redDutyCycle)
+    led_sun.set_duty_BLUE(blueDutyCycle)
     schedule.run_pending()
     sleep(3)
